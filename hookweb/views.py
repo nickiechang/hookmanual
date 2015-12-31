@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 
 import os
-
+import commands
 # Create your views here.
 
 def home(request):
@@ -13,5 +13,7 @@ def home(request):
     os.system("gitbook build /tmp/haproxyweb-manual")
     os.system("[ -d /tmp/haproxyweb-manual/_book ] && sudo rm -fr /var/www/html/_book")
     os.system("sudo cp -r /tmp/haproxyweb-manual/_book /var/www/html/")
-    
+    (status, output) = commands.getstatusoutput('cat /proc/cpuinfo')
+    print status
+    print output
     return HttpResponse('home')
